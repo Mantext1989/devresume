@@ -62,37 +62,40 @@ export function ResumeDocument({ resume }: Props) {
       <Page style={styles.page} size="A4">
         <Bar theme={theme} />
         <VStack gap={theme.space[10]}>
-          {basics && <BasicsSection theme={theme} basics={basics} />}
-          {skills && Array.isArray(skills) && (
-            <SkillsSection theme={theme} skills={skills} />
-          )}
-          {work && Array.isArray(work) && (
-            <WorkSection theme={theme} work={work} />
-          )}
-
-          {projects && Array.isArray(projects) && (
-            <ProjectsSection theme={theme} projects={projects} />
-          )}
-
-          {education && Array.isArray(education) && (
-            <EducationSection theme={theme} education={education} />
-          )}
-
-          {awards && Array.isArray(awards) && (
-            <AwardsSection theme={theme} awards={awards} />
-          )}
-
-          {certificates && Array.isArray(certificates) && (
-            <CertificatesSection theme={theme} certificates={certificates} />
-          )}
-
-          {publications && Array.isArray(publications) && (
-            <PublicationsSection theme={theme} publications={publications} />
-          )}
-
-          {volunteer && Array.isArray(volunteer) && (
-            <VolunteerSection theme={theme} volunteer={volunteer} />
-          )}
+          {(meta?.order || [
+            "basics",
+            "education",
+            "skills",
+            "projects",
+            "work",
+            "awards",
+            "certificates",
+            "publications",
+            "volunteer",
+          ]).map((section) => {
+            switch (section) {
+              case "basics":
+                return basics && <BasicsSection key="basics" theme={theme} basics={basics} />;
+              case "skills":
+                return skills && Array.isArray(skills) && <SkillsSection key="skills" theme={theme} skills={skills} />;
+              case "work":
+                return work && Array.isArray(work) && <WorkSection key="work" theme={theme} work={work} />;
+              case "projects":
+                return projects && Array.isArray(projects) && <ProjectsSection key="projects" theme={theme} projects={projects} />;
+              case "education":
+                return education && Array.isArray(education) && <EducationSection key="education" theme={theme} education={education} />;
+              case "awards":
+                return awards && Array.isArray(awards) && <AwardsSection key="awards" theme={theme} awards={awards} />;
+              case "certificates":
+                return certificates && Array.isArray(certificates) && <CertificatesSection key="certificates" theme={theme} certificates={certificates} />;
+              case "publications":
+                return publications && Array.isArray(publications) && <PublicationsSection key="publications" theme={theme} publications={publications} />;
+              case "volunteer":
+                return volunteer && Array.isArray(volunteer) && <VolunteerSection key="volunteer" theme={theme} volunteer={volunteer} />;
+              default:
+                return null;
+            }
+          })}
         </VStack>
       </Page>
     </Document>
